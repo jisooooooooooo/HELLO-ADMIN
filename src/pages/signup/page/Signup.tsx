@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react';
 import { useFunnel } from '@use-funnel/react-router-dom';
 
 import StepLayout from '../components/StepLayout';
@@ -13,10 +14,14 @@ type StepKey = (typeof STEP_ORDER)[number];
 
 const indexOf = (k: StepKey) => STEP_ORDER.indexOf(k) + 1;
 
+interface OnNextProps {
+  onNext: () => void;
+}
+
 const makeRenderer =
   (
     key: Exclude<StepKey, 'Done'>,
-    Comp: React.FC<{ onNext: () => void }>,
+    Comp: (props: OnNextProps) => ReactElement,
     next: StepKey,
   ): StepComponent =>
   ({ history }) => (
